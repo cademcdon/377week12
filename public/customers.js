@@ -1,9 +1,27 @@
+async function createCustomer() {
+    await fetch('/customer', {
+        method: 'POST',
+        body: JSON.stringify({
+            firstName: `${document.getElementById('firstName').value}`,
+            lastName: `${document.getElementById('lastName').value}`,
+            state: `${document.getElementById('state').value}`,
+        }),
+        headers: {
+            'Content-type': 'application/json',
+        },
+    });
+
+    await loadCustomerData();
+}
+
 async function loadCustomerData() {
     await fetch('/customers')
     .then((result) => result.json())
     .then((resultJson) => {
         console.log(resultJson);
         const table = document.createElement('table');
+
+        table.setAttribute('id', 'customerInfo');
 
         const tableRow = document.createElement('tr');
         const tableHeadingFirstName = document.createElement('th');
@@ -38,6 +56,11 @@ async function loadCustomerData() {
 
             table.appendChild(customerTableRow);
         })
+
+        const preExistingTable = document.getElementById('customerInfo');
+        if (preExistingTable) {
+            preExistingTable.remove();
+        }
 
         document.body.appendChild(table);
     });
