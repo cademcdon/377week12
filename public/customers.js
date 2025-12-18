@@ -1,5 +1,5 @@
 async function loadCustomerData() {
-    await fetch('http://localhost:3003/customers')
+    await fetch('/customers')
     .then((result) => result.json())
     .then((resultJson) => {
         console.log(resultJson);
